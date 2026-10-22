@@ -1,0 +1,1 @@
+C:/Program Files/PostgreSQL/17/bin/postgres.exe "-D" "E:/sts projects/Shield_Auth/guardian/target-test-services/postgres" "-p" "55432" "-h" "127.0.0.1"

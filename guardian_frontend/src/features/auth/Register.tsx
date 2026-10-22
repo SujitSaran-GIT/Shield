@@ -1,0 +1,3 @@
+import AccountFlow from './AccountFlow';
+import { Link } from 'react-router-dom';
+export default function Register() { return <><AccountFlow mode="enrollment" /><nav aria-label="Administrator provisioning" className="section-card mx-auto max-w-xl space-y-3"><p>Direct administrator registration is unavailable. Client administrators use verified workspace enrollment above, when enabled by platform policy.</p><p>Platform administrators: <Link className="text-button" to="/invitation">Accept an invitation</Link> from an existing administrator.</p><p>Initial platform setup: deployment operators use the <Link className="text-button" to="/bootstrap">bootstrap workflow</Link>.</p></nav></>; }

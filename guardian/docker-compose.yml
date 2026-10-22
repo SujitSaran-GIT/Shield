@@ -1,0 +1,16 @@
+services:
+  guardian:
+    build: .
+    image: guardian-auth:latest
+    ports:
+      - "127.0.0.1:6061:6061"
+    volumes:
+      - ./geoip:/geoip:ro
+    env_file:
+      - .env
+    environment:
+      GEOIP_DB_PATH: /geoip/GeoLite2-City.mmdb
+    restart: unless-stopped
+    stop_grace_period: 40s
+    security_opt:
+      - no-new-privileges:true

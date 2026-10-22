@@ -1,0 +1,36 @@
+package com.guardian.entity.enums;
+
+public enum EventType {
+    // Client Events
+    CLIENT_REGISTRATION_SUCCESS,
+    CLIENT_REGISTRATION_FAILED,
+    CLIENT_AUTH_SUCCESS,
+    CLIENT_AUTH_FAILED,
+
+    // User Events
+    USER_REGISTRATION_SUCCESS,
+    USER_REGISTRATION_FAILED,
+    LOGIN_SUCCESS,
+    LOGIN_FAILED,
+    LOGOUT_SUCCESS,
+
+    // Token Events
+    TOKEN_ISSUED,
+    TOKEN_REFRESHED,
+    TOKEN_EXPIRED,
+    TOKEN_INVALID,
+
+    // Security Events
+    RATE_LIMIT_EXCEEDED,
+    BRUTE_FORCE_DETECTED,
+    SUSPICIOUS_ACTIVITY,
+
+    // Admin Events
+    ADMIN_CREATED,
+    ADMIN_UPDATED,
+    ADMIN_DEACTIVATED,
+
+    // System Events
+    SYSTEM_ERROR,
+    DATABASE_ERROR
+}

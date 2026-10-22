@@ -1,0 +1,17 @@
+# External application integration and standards boundary
+
+Shield currently offers a confidential server-to-server authentication API. Its JWT login endpoints are **not an OAuth authorization server or OpenID Provider**. This implementation does not invent authorization-code, discovery, consent, or ID-token endpoints. Existing server-side integrations remain supported with OTP verification and secured client verifiers.
+
+For the existing API, keep each client secret exclusively in the application's backend/secret manager. Proxy authentication through that backend. Register its exact permitted origins, verify tenant status, and handle 401/403/429/503 responses. Never embed a secret in React, a mobile bundle, local storage, a URL, or analytics. Rotate through the authorized client endpoint when a secret is lost; existing secrets cannot be retrieved.
+
+Before offering direct centralized browser sign-in, integrate an established OpenID Provider (for example an independently deployed standards-compliant provider), or add Spring Authorization Server as a separately scoped service. Preserve Shield accounts through an explicit federation/import strategy; do not silently replace identities, password hashes, or tenant memberships. Implement the following acceptance gates:
+
+1. Establish an HTTPS issuer, authenticated confidential clients, public PKCE clients, exact redirect URI registrations, supported scopes, and tenant membership mapping. Public clients have no reusable browser secret.
+2. Implement Authorization Code with S256 PKCE using the provider/library endpoints. Require state and nonce validation in client SDKs, single-use short-lived codes, and exact redirect matching. Keep consent and authorization policy explicit.
+3. Publish provider discovery and JWKS from the actual provider, with asymmetric signing keys and documented rotation. Validate issuer, audience, time claims, nonce, code verifier, and client binding using maintained SDKs. Shield's internal HS256 API token must not be advertised as an OIDC ID token.
+4. Map provider subject identifiers to existing Shield human IDs and client membership explicitly. Require verified control for any account linking; matching email alone is insufficient. Keep CLIENT_ADMIN ownership and SUPER_ADMIN provisioning in trusted server-side data.
+5. Decide global identity plus membership migration versus separate tenant identities before account import. The current legacy schema has globally unique email and one client association per human; it refuses cross-tenant reuse instead of accidentally merging accounts. Supporting the same person across tenants requires an additive membership migration and reviewed linking flow.
+6. Implement authorization consent where policy requires, account/session UI, refresh rotation and replay policy, logout/revocation, and key/metadata caching. Use secure HttpOnly cookies and architecture-appropriate CSRF protection.
+7. Run provider conformance tests plus negative state/nonce/PKCE/redirect/audience tests and end-to-end tests against at least two independent client SDKs. Version and document the integration before making standards-compliance claims.
+
+References: [Spring Authorization Server documentation](https://docs.spring.io/spring-authorization-server/reference/), [OAuth 2.0 Security Best Current Practice](https://www.rfc-editor.org/rfc/rfc9700.html), and [OpenID Connect Core](https://openid.net/specs/openid-connect-core-1_0.html). These are implementation acceptance criteria, not claims that the current custom API implements OIDC.
