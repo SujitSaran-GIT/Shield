@@ -3,7 +3,7 @@ services:
     build: .
     image: guardian-auth:latest
     ports:
-      - "127.0.0.1:6061:6061"
+      - "127.0.0.1:6062:6061"
     volumes:
       - ./geoip:/geoip:ro
     env_file:

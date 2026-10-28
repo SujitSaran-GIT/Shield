@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  server: { proxy: { '/api': 'http://localhost:6061', '/actuator': 'http://localhost:6061', '/ws': { target: 'http://localhost:6061', ws: true } } },
+  server: { proxy: { '/api': 'http://localhost:6061', '/actuator': 'http://localhost:6061', '/ws': { target: 'http://localhost:6062', ws: true } } },
   define: {
     global: 'globalThis',
   },
